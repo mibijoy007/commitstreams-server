@@ -105,12 +105,18 @@ async function getOrCreateUserFromGitHubProfile({ profile, accessToken }) {
   return trimmedPayloadForSession;
 }
 
+
+
+// console.log("config=======>",config);
+
+
 const getGitHubStrategy = () => {
   return new GitHubStrategy(
     {
       clientID: config.GITHUB_CLIENT_ID,
       clientSecret: config.GITHUB_CLIENT_SECRET,
-      callbackURL: `${config.HOST}/api/auth/github/callback`,
+      // callbackURL: `${config.HOST}/api/auth/github/callback`,
+      callbackURL: `http://localhost:3000/`,
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {

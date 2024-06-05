@@ -12,9 +12,11 @@ class Config {
       this.config = this.loadAndValidateConfig();
       Config.instance = this;
       logger.info('Config loaded and validated', {
-        NODE_ENV: this.config.NODE_ENV,
+        // NODE_ENV: this.config.NODE_ENV ,
+        NODE_ENV: 'development',
         PORT: this.config.PORT,
         HOST: this.config.HOST,
+        // HOST: 'localhost',
         CLIENT_HOST: this.config.CLIENT_HOST,
       });
       // log the keys only (not the values) from the config
@@ -39,6 +41,9 @@ class Config {
     // Construct the path to the config file
     const configFile = path.join(__dirname, `config.${environment}.json`);
 
+
+    // console.log("configgggggggg==>",configFile);
+    // 
     // Check if the file exists before trying to read it
     if (!fs.existsSync(configFile)) {
       throw new Error(`Config file not found: ${configFile}`);
@@ -67,12 +72,17 @@ class Config {
     }
 
     const { error, value: validatedConfig } = schema.validate(finalConfig);
+    // console.log("wwweeeeeeeeeeee=>>>",error);
     if (error) {
       const missingProperties = error.details.map((detail) => detail.path[0]);
+
+      // console.log("dddddddddddddd=>>>",finalConfig,missingProperties);
+
       throw new Error(
         `Config validation error: missing properties ${missingProperties}`
       );
     }
+    // console.log("validatedConfig===<<",validatedConfig);
     return validatedConfig;
   }
 
